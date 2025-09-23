@@ -3,6 +3,8 @@
 This repository contains the MATLAB implementation of **Green Vigilance**, a simulation framework for precision agriculture that integrates **Unmanned Aerial Vehicles (UAVs)** and **Unmanned Ground Vehicles (UGVs)** for early detection of plant diseases.  
 The project combines **aerial surveys**, **ground-level inspections**, and **advanced estimation algorithms** (EKF & WLS) to improve plant monitoring and disease mapping in large agricultural fields.
 
+> ⚠️ This repository is currently under development — code and documentation will be uploaded progressively in the coming weeks.
+
 ---
 
 ## 📌 Project Overview
