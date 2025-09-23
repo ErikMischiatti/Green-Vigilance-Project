@@ -5,6 +5,18 @@ The project combines **aerial surveys**, **ground-level inspections**, and **adv
 
 ---
 
+## 📌 Project Overview
+
+- **Goal:** Enhance crop disease monitoring by combining UAV aerial data with UGV ground inspections.  
+- **Approach:**  
+  1. UAV scans the field and generates 3D disease probability maps.  
+  2. UGVs use these maps to navigate critical areas for detailed inspections.  
+  3. EKF improves UAV state estimation by fusing GPS and IMU.  
+  4. WLS refines UGV positioning through cooperative multi-agent estimation.  
+- **Outcome:** Early disease detection, better coverage, reduced uncertainty, and improved decision-making for precision agriculture.
+
+---
+
 ## 🏗️ System Architecture
 
 - **UAV Module**  
@@ -114,14 +126,6 @@ src/
 This work is based on the study:  
 **"Green Vigilance: Drone Innovation for Early Detection of Crop Diseases"**  
 Erik Mischiatti, 2024.  
-
----
-
-## 📌 Future Work
-
-- Integration of **real-world UAV/UGV communication protocols**.  
-- Testing with **real agricultural datasets**.  
-- Extension to **multi-agent coordination in real-time**.  
 
 ---
 
