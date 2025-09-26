@@ -135,6 +135,6 @@ Erik Mischiatti, 2024.
 
 **Erik Mischiatti**  
 M.Sc. Mechatronic Engineering (Electronics & Robotics)  
-University of Trento & TU Wien  
+University of Trento 
 
 🔗 [Portfolio](https://erikmischiatti.com) | [IEEE CASE 2024 Paper](https://ieeexplore.ieee.org/)
