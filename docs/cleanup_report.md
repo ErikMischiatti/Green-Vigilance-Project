@@ -69,10 +69,9 @@ Commands run from a clean virtual environment:
 
 ## GitHub Readiness Notes
 
-- This directory is not currently initialized as a git repository, so `git status --short` and `git diff --stat` cannot report a commit-ready index.
-- No `LICENSE` file is present. The owner should choose and add a license before public release.
 - Files intended for tracking: `README.md`, `pyproject.toml`, `requirements.txt`, `.gitignore`, `configs/`, `docs/`, `src/green_vigilance/`, `tests/`, `matlab_legacy/`.
 - Files intentionally ignored or removed from tracking: `.venv/`, `__pycache__/`, `.pytest_cache/`, generated `results/`, logs, autosave files, IDE files, and build metadata.
+- Curated baseline output images are tracked under `docs/assets/` for GitHub presentation only; the full generated `results/` directory remains ignored.
 
 ## Recommended Commit Message
 

@@ -71,6 +71,25 @@ Scenario YAML files are validated before the simulation starts. Missing required
 
 `results/` is generated output and is ignored by git.
 
+## Example Outputs
+
+The simulation writes generated outputs under `results/<scenario>/figures/`.
+The full `results/` directory is ignored by git. A small curated baseline example is kept under `docs/assets/` for GitHub presentation.
+
+The 3D visualization is a static Matplotlib debugging overview inspired by the MATLAB visualization. It is not fully equivalent to the MATLAB graphics, and scientific equivalence with MATLAB has not yet been validated.
+
+### Baseline heatmap
+
+![Baseline heatmap](docs/assets/baseline_heatmap.png)
+
+### Baseline UAV trajectory
+
+![Baseline trajectory](docs/assets/baseline_trajectories.png)
+
+### Baseline 3D scene
+
+![Baseline 3D scene](docs/assets/baseline_scene3d.png)
+
 ## Tests
 
 ```bash

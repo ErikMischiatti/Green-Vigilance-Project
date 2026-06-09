@@ -42,6 +42,10 @@
 - Heatmap quality depends on observed leaves and current camera path coverage.
 - Scenario validation rejects missing required sections and invalid numeric ranges before simulation starts.
 
+## Curated Example Outputs
+
+Curated baseline output images were added under `docs/assets/` so the GitHub README can show representative heatmap, trajectory, and static 3D scene figures. The generated `results/` directory remains ignored by git; these assets are presentation examples only.
+
 ## MATLAB Archive
 
 The MATLAB prototype has been copied to `matlab_legacy/`. Original files remain in place for now to avoid accidental loss during migration.
