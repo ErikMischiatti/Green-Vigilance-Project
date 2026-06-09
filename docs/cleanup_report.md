@@ -46,11 +46,11 @@ Fixed:
 - `pyproject.toml` now provides a `dev` optional dependency group for clean editable installs with tests.
 - Extreme scenario execution was verified to handle zero observed leaves while still producing output figures.
 
-Not fixed yet:
+Follow-up items:
 
-- Scenario configuration is still lightly validated; missing required sections raise normal `KeyError` exceptions rather than structured validation errors.
 - WLS exists as a generic estimator but is not deeply integrated into full UGV localization.
-- Disease propagation, target assignment, obstacle avoidance, and 3D visualization remain first-pass or placeholder-level components.
+- Disease propagation, target assignment, obstacle avoidance, and 3D visualization remain first-pass components.
+- The new 3D scene is static PNG output and does not reproduce all MATLAB visual details.
 - MATLAB/Python numerical equivalence has not been validated.
 
 ## Validation Log
@@ -61,7 +61,7 @@ Commands run from a clean virtual environment:
 - `.venv/bin/python -m pip install --upgrade pip`: passed; pip upgraded to 26.1.2
 - `.venv/bin/python -m pip install -e ".[dev]"`: passed
 - `.venv/bin/python -m compileall src`: passed
-- `.venv/bin/pytest -q`: passed, 9 tests
+- `.venv/bin/pytest -q`: passed, 17 tests
 - `.venv/bin/python -m green_vigilance --config configs/baseline.yaml`: passed; observed 1734 / 13218 leaves; RMSE 0.435 m
 - `.venv/bin/python -m green_vigilance --config configs/high_noise.yaml`: passed; observed 930 / 14151 leaves; RMSE 1.461 m
 - `.venv/bin/python -m green_vigilance --config configs/extreme_uncertainty.yaml`: passed; observed 0 / 13495 leaves; RMSE 1.658 m
@@ -80,4 +80,4 @@ Commands run from a clean virtual environment:
 
 ## Recommended Next Development Task
 
-Add structured scenario configuration validation with clear error messages and focused tests for missing or invalid config fields.
+Improve scientific validation and scenario comparison metrics now that configuration validation and basic 3D scene output are available.

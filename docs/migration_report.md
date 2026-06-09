@@ -23,6 +23,8 @@
 - `agents/ugv.py`: basic UGV waypoint tracking.
 - `control/obstacle_avoidance.py`: simple repulsive angular obstacle correction.
 - `simulation/runner.py`: asynchronous UAV scan to UGV target handoff.
+- `config.py`: structured scenario validation with readable field-path errors.
+- `visualization/scene3d.py`: basic static Matplotlib 3D scene output.
 
 ## Assumptions
 
@@ -33,11 +35,12 @@
 
 ## Known Limitations
 
-- Python 3D visualization is not implemented yet.
+- Python 3D visualization is now a basic static Matplotlib overview and is not a full MATLAB graphics reproduction.
 - The Python outputs are not numerically validated against MATLAB figures.
 - UGV obstacle avoidance is intentionally simple.
 - WLS is implemented as a generic estimator but not deeply integrated into UGV state estimation yet.
 - Heatmap quality depends on observed leaves and current camera path coverage.
+- Scenario validation rejects missing required sections and invalid numeric ranges before simulation starts.
 
 ## MATLAB Archive
 
@@ -59,8 +62,8 @@ PYTHONPATH=src python3 -m green_vigilance --config configs/extreme_uncertainty.y
 Actual validation results in this workspace:
 
 - `.venv/bin/python -m compileall src`: passed.
-- `.venv/bin/pytest -q`: passed, 8 tests.
-- `.venv/bin/python -m green_vigilance --config configs/baseline.yaml`: passed, observed 1734 / 13218 leaves, UAV RMSE 0.435 m.
-- `.venv/bin/green-vigilance --config configs/baseline.yaml`: passed, observed 1734 / 13218 leaves, UAV RMSE 0.435 m.
-- `.venv/bin/python -m green_vigilance --config configs/high_noise.yaml`: passed, observed 930 / 14151 leaves, UAV RMSE 1.461 m.
-- `.venv/bin/python -m green_vigilance --config configs/extreme_uncertainty.yaml`: passed, observed 0 / 13495 leaves, UAV RMSE 1.658 m. This is documented as an extreme sensing-degradation outcome rather than a validated scientific result.
+- `.venv/bin/pytest -q`: passed, 17 tests.
+- `.venv/bin/python -m green_vigilance --config configs/baseline.yaml`: passed, observed 1734 / 13218 leaves, UAV RMSE 0.435 m; wrote heatmap, trajectories, and `scene3d.png`.
+- `.venv/bin/green-vigilance --config configs/baseline.yaml`: passed, observed 1734 / 13218 leaves, UAV RMSE 0.435 m; wrote heatmap, trajectories, and `scene3d.png`.
+- `.venv/bin/python -m green_vigilance --config configs/high_noise.yaml`: passed, observed 930 / 14151 leaves, UAV RMSE 1.461 m; wrote heatmap, trajectories, and `scene3d.png`.
+- `.venv/bin/python -m green_vigilance --config configs/extreme_uncertainty.yaml`: passed, observed 0 / 13495 leaves, UAV RMSE 1.658 m; wrote heatmap, trajectories, and `scene3d.png`. This is documented as an extreme sensing-degradation outcome rather than a validated scientific result.

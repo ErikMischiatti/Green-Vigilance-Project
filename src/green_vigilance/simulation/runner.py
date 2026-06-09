@@ -16,6 +16,7 @@ from green_vigilance.mapping.heatmap import disease_heatmap, top_targets_from_he
 from green_vigilance.sensing.camera import camera_from_specs
 from green_vigilance.sensing.frustum import points_in_frustum
 from green_vigilance.visualization.plots2d import plot_heatmap, plot_trajectories
+from green_vigilance.visualization.scene3d import plot_scene3d
 
 
 def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
@@ -72,7 +73,9 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
 
     true_path = np.zeros((len(times), 3))
     est_path = np.zeros((len(times), 3))
+    uav_scene_path = np.zeros((len(times), 3))
     observed = np.zeros(len(plants.leaf_xyz), dtype=bool)
+    camera_pose = np.array([x_true[0], x_true[1], altitude, x_true[2], pitch, roll])
 
     for k, now in enumerate(times):
         control, dist = waypoint_control(x_true, waypoints[wp_index], v_nom, w_max, kp_ang, kp_dist)
@@ -87,6 +90,8 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
         observed |= points_in_frustum(camera, pose, plants.leaf_xyz)
         true_path[k] = x_true
         est_path[k] = ekf.x
+        uav_scene_path[k] = np.array([x_true[0], x_true[1], altitude])
+        camera_pose = pose
         if dist < wp_tol:
             wp_index = (wp_index + 1) % len(waypoints)
 
@@ -113,6 +118,8 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
         ugv.path.append(ugv.state.copy())
     ugv_steps = int(float(ugv_cfg.get("duration_s", 45.0)) / dt)
     for _ in range(ugv_steps):
+        if not ugvs:
+            break
         states_xy = np.vstack([u.state[:2] for u in ugvs])
         for i, ugv in enumerate(ugvs):
             other = np.delete(states_xy, i, axis=0)
@@ -129,8 +136,23 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
             )
 
     ugv_paths = [np.asarray(u.path) for u in ugvs]
-    plot_heatmap(heat, x_edges, y_edges, targets, figure_dir / "heatmap.png")
-    plot_trajectories(true_path, est_path, ugv_paths, targets, figure_dir / "trajectories.png")
+    heatmap_path = figure_dir / "heatmap.png"
+    trajectories_path = figure_dir / "trajectories.png"
+    scene3d_path = figure_dir / "scene3d.png"
+    plot_heatmap(heat, x_edges, y_edges, targets, heatmap_path)
+    plot_trajectories(true_path, est_path, ugv_paths, targets, trajectories_path)
+    plot_scene3d(
+        field,
+        plants,
+        leaf_health,
+        observed,
+        uav_scene_path,
+        ugv_paths,
+        scene3d_path,
+        camera=camera,
+        camera_pose=camera_pose,
+        scenario_name=str(cfg.get("name", output_dir.name)),
+    )
 
     rmse = float(np.sqrt(np.mean(np.sum((true_path[:, :2] - est_path[:, :2]) ** 2, axis=1))))
     return {
@@ -142,5 +164,5 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
         "targets": targets,
         "ugv_paths": ugv_paths,
         "uav_position_rmse_m": rmse,
-        "figures": [str(figure_dir / "heatmap.png"), str(figure_dir / "trajectories.png")],
+        "figures": [str(heatmap_path), str(trajectories_path), str(scene3d_path)],
     }

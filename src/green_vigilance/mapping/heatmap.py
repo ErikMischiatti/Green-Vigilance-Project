@@ -36,6 +36,8 @@ def disease_heatmap(
 
 
 def top_targets_from_heatmap(heat: np.ndarray, x_edges: np.ndarray, y_edges: np.ndarray, count: int, min_separation: float) -> np.ndarray:
+    if count <= 0:
+        return np.empty((0, 2))
     flat_indices = np.argsort(heat.ravel())[::-1]
     targets: list[np.ndarray] = []
     xs = (x_edges[:-1] + x_edges[1:]) / 2.0

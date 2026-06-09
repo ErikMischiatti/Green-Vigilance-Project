@@ -10,7 +10,7 @@ The archived MATLAB material is kept in `matlab_legacy/` for reference only. The
 |---|---|---|
 | Python package | Implemented | Installable from `src/green_vigilance/` |
 | MATLAB dependency | Removed from active path | MATLAB files are archived as legacy/reference material |
-| Scenario configs | Implemented | Baseline, high-noise, and extreme-uncertainty YAML scenarios |
+| Scenario configs | Implemented | Baseline, high-noise, and extreme-uncertainty YAML scenarios with structured validation |
 | Unicycle dynamics | Implemented | Ported from MATLAB prototype |
 | UAV EKF | Implemented | GPS update and gyro-driven prediction |
 | Camera FoV / DoF / frustum | Implemented | Ported and simplified for Python |
@@ -19,7 +19,7 @@ The archived MATLAB material is kept in `matlab_legacy/` for reference only. The
 | Heatmap generation | First-pass implementation | Based on observed leaf health |
 | UGV movement | First-pass implementation | Waypoint tracking with simple obstacle avoidance |
 | WLS | Implemented, lightly integrated | Generic weighted position estimator; not yet deeply integrated into full UGV localization |
-| 3D visualization | Planned / placeholder | MATLAB version archived; Python currently writes 2D figures |
+| 3D visualization | Basic implementation | Matplotlib scene overview written per scenario |
 | MATLAB/Python equivalence | Not validated | Numerical equivalence tests are future work |
 
 ## Installation
@@ -59,6 +59,15 @@ Expected generated outputs:
 
 - `results/<scenario>/figures/heatmap.png`
 - `results/<scenario>/figures/trajectories.png`
+- `results/<scenario>/figures/scene3d.png`
+
+For example, the baseline scenario writes:
+
+- `results/baseline/figures/heatmap.png`
+- `results/baseline/figures/trajectories.png`
+- `results/baseline/figures/scene3d.png`
+
+Scenario YAML files are validated before the simulation starts. Missing required sections and invalid ranges fail early with readable field-path messages. The 3D scene is a PNG; open it with any image viewer or from the generated results directory.
 
 `results/` is generated output and is ignored by git.
 
@@ -84,9 +93,8 @@ tests/                   Pytest tests
 - Disease propagation is a simplified stochastic approximation, not a validated biological model.
 - UGV obstacle avoidance is simple local steering, not a full planner.
 - WLS is available as an estimator but is not yet deeply integrated into full UGV localization.
-- Python 3D visualization is currently placeholder-level; normal runs generate 2D figures.
+- The Python 3D visualization is a static Matplotlib overview, not a full reproduction of MATLAB graphics or an interactive scene.
 - MATLAB/Python numerical equivalence has not been validated.
-- Configuration validation is minimal and should be strengthened before larger experiments.
 
 ## Relation to the Original Report
 

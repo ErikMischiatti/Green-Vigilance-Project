@@ -36,6 +36,16 @@ def generate_trees(field: Field, n_trees: int, seed: int | None = None, **kwargs
     radii: list[float] = []
     tree_health: list[float] = []
 
+    if n_trees <= 0:
+        return PlantField(
+            np.empty((0, 3), dtype=float),
+            np.empty(0, dtype=float),
+            np.empty(0, dtype=int),
+            np.empty((0, 3), dtype=float),
+            np.empty(0, dtype=float),
+            np.empty(0, dtype=float),
+        )
+
     for tree_id in range(n_trees):
         height = rng.uniform(*height_range)
         f_base = rng.uniform(*canopy_base_frac)
