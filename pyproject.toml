@@ -20,6 +20,7 @@ test = ["pytest>=8.0"]
 
 [project.scripts]
 green-vigilance = "green_vigilance.cli:main"
+green-vigilance-compare = "green_vigilance.compare:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
