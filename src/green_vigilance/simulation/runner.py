@@ -15,6 +15,7 @@ from green_vigilance.estimation.ekf import EKFState
 from green_vigilance.mapping.heatmap import disease_heatmap, top_targets_from_heatmap
 from green_vigilance.sensing.camera import camera_from_specs
 from green_vigilance.sensing.frustum import points_in_frustum
+from green_vigilance.simulation.summary import build_summary, write_summary
 from green_vigilance.visualization.plots2d import plot_heatmap, plot_trajectories
 from green_vigilance.visualization.scene3d import plot_scene3d
 
@@ -139,6 +140,7 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
     heatmap_path = figure_dir / "heatmap.png"
     trajectories_path = figure_dir / "trajectories.png"
     scene3d_path = figure_dir / "scene3d.png"
+    summary_path = output_dir / "summary.json"
     plot_heatmap(heat, x_edges, y_edges, targets, heatmap_path)
     plot_trajectories(true_path, est_path, ugv_paths, targets, trajectories_path)
     plot_scene3d(
@@ -155,6 +157,25 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
     )
 
     rmse = float(np.sqrt(np.mean(np.sum((true_path[:, :2] - est_path[:, :2]) ** 2, axis=1))))
+    outputs = {
+        "heatmap": heatmap_path,
+        "trajectories": trajectories_path,
+        "scene3d": scene3d_path,
+        "summary": summary_path,
+    }
+    summary = build_summary(
+        cfg,
+        field=field,
+        plants=plants,
+        leaf_health=leaf_health,
+        observed=observed,
+        true_path=true_path,
+        est_path=est_path,
+        targets=targets,
+        ugv_paths=ugv_paths,
+        outputs=outputs,
+    )
+    write_summary(summary, summary_path)
     return {
         "true_path": true_path,
         "est_path": est_path,
@@ -165,4 +186,6 @@ def run_simulation(cfg: dict[str, Any]) -> dict[str, Any]:
         "ugv_paths": ugv_paths,
         "uav_position_rmse_m": rmse,
         "figures": [str(heatmap_path), str(trajectories_path), str(scene3d_path)],
+        "summary": summary,
+        "summary_path": str(summary_path),
     }

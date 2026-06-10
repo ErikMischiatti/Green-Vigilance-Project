@@ -6,6 +6,18 @@ Green Vigilance is a Python-first UAV/UGV simulation prototype for early crop di
 
 The archived MATLAB material is kept in `matlab_legacy/` for reference only. The Python implementation is a runnable migration foundation, not a scientifically complete or production-ready reproduction of the original report.
 
+## Features
+
+- Scenario-driven UAV/UGV precision-agriculture simulation.
+- UAV unicycle motion with EKF-based state estimation.
+- Camera field-of-view, depth/range, and frustum-based leaf observation model.
+- First-pass disease propagation and observed disease heatmap generation.
+- First-pass UGV target assignment and obstacle-aware waypoint motion.
+- Generic WLS estimator module for future cooperative UGV localization work.
+- Static 2D and 3D Matplotlib outputs for each scenario.
+- JSON scenario summaries and CSV/Markdown scenario comparison outputs.
+- Pytest coverage and GitHub Actions CI.
+
 ## Project Status
 
 | Component | Status | Notes |
@@ -62,16 +74,31 @@ Expected generated outputs:
 - `results/<scenario>/figures/heatmap.png`
 - `results/<scenario>/figures/trajectories.png`
 - `results/<scenario>/figures/scene3d.png`
+- `results/<scenario>/summary.json`
 
 For example, the baseline scenario writes:
 
 - `results/baseline/figures/heatmap.png`
 - `results/baseline/figures/trajectories.png`
 - `results/baseline/figures/scene3d.png`
+- `results/baseline/summary.json`
 
 Scenario YAML files are validated before the simulation starts. Missing required sections and invalid ranges fail early with readable field-path messages. The 3D scene is a PNG; open it with any image viewer or from the generated results directory.
 
 `results/` is generated output and is ignored by git.
+
+## Compare Scenarios
+
+After running the baseline, high-noise, and extreme-uncertainty scenarios, generate a compact comparison report:
+
+```bash
+python -m green_vigilance.compare --results results
+```
+
+This writes:
+
+- `results/scenario_comparison.csv`
+- `results/scenario_comparison.md`
 
 ## Example Outputs
 
@@ -119,8 +146,20 @@ tests/                   Pytest tests
 - The Python 3D visualization is a static Matplotlib overview, not a full reproduction of MATLAB graphics or an interactive scene.
 - MATLAB/Python numerical equivalence has not been validated.
 
+## Roadmap
+
+- Validate Python outputs against selected MATLAB reference cases and report equations.
+- Integrate WLS into UGV cooperative localization instead of keeping it as a standalone estimator.
+- Replace the first-pass disease model with a documented agronomic model.
+- Improve visualization with richer 3D inspection and optional animation.
+- Package a reproducible release with pinned example outputs and documented scenario baselines.
+
 ## Relation to the Original Report
 
 The original project report is preserved in `docs/Report_distribution_project.pdf`. The Python implementation preserves the core direction of the original UAV/UGV disease-monitoring workflow, but future work is needed to validate numerical equivalence and scientific assumptions.
 
 See `docs/migration_report.md` and `docs/cleanup_report.md` for migration and cleanup details.
+
+## License
+
+This project is licensed under the terms in `LICENSE`.
