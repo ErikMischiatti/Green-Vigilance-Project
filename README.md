@@ -1,5 +1,7 @@
 # Green Vigilance
 
+![CI](https://github.com/ErikMischiatti/Green-Vigilance-Project/actions/workflows/ci.yml/badge.svg)
+
 Green Vigilance is a Python-first UAV/UGV simulation prototype for early crop disease detection in precision agriculture. The project began as a MATLAB prototype; the active runtime is now the Python package under `src/green_vigilance/` and does not require MATLAB.
 
 The archived MATLAB material is kept in `matlab_legacy/` for reference only. The Python implementation is a runnable migration foundation, not a scientifically complete or production-ready reproduction of the original report.
@@ -96,6 +98,8 @@ The 3D visualization is a static Matplotlib debugging overview inspired by the M
 python -m compileall src
 pytest -q
 ```
+
+CI runs compile checks, tests, and the baseline scenario on GitHub Actions.
 
 ## Repository Structure
 
