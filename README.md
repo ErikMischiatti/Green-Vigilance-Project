@@ -128,6 +128,15 @@ pytest -q
 
 CI runs compile checks, tests, and the baseline scenario on GitHub Actions.
 
+## Validation
+
+See:
+
+- `docs/scientific_validation.md`
+- `docs/scenario_validation.md`
+- `docs/report_parameter_inventory.md`
+- `docs/matlab_legacy_mapping.md`
+
 ## Repository Structure
 
 ```text
