@@ -56,7 +56,7 @@ The scenario summaries show the expected qualitative degradation:
 
 - Baseline has the highest observed leaf count and lowest UAV RMSE.
 - High-noise has fewer observed leaves and higher UAV RMSE.
-- Extreme uncertainty can fully suppress useful leaf observation while still producing run artifacts.
+- Extreme uncertainty retains some useful leaf observation after report-aligned camera changes, but coverage remains below baseline and navigation error is highest.
 
 ## Alignment with the Report
 
@@ -67,6 +67,9 @@ Aligned:
 - Number of trees: 80.
 - Initial infected trees: 4.
 - Disease spread radius: 20 m.
+- UAV height: 7 m.
+- Camera sensor width and focal length: 0.036 m and 0.012 m.
+- Report maximum tree height represented as a configured height range ending at 3 m.
 - Unicycle dynamics and EKF structure.
 - Hybrid camera/FoV/frustum concepts.
 - Qualitative trend that increased uncertainty degrades performance.
@@ -75,9 +78,9 @@ Aligned:
 
 Different or missing:
 
-- UAV flight height is 10 m in YAML, while the report table states 7 m.
-- Python uses 3 m/s nominal UAV speed, while the report lists 4-10 m/s.
-- Python camera sensor/focal values differ from the report's 0.036 m sensor width and 0.012 m focal length.
+- Python uses single nominal UAV/UGV speed values aligned to the report lower bounds, while the report lists min/max speed ranges.
+- Python uses a derived 24 mm sensor height because the report specifies sensor width but not sensor height.
+- Python keeps scenario-specific sensing `range_max_m` values as an uncertainty proxy because explicit report uncertainty factors are not modeled.
 - Report uncertainty factors for distance, visibility, height, and occlusion radius are not represented directly.
 - UGV camera height and UGV min/max speed are not modeled as report parameters.
 - Field explored percentage is not computed; Python reports observed leaf ratio instead.
@@ -102,9 +105,9 @@ Different or missing:
 
 ## Recommendations
 
-1. Decide whether future scenarios should match the report tables exactly or preserve the migrated MATLAB demo settings.
+1. Implement remaining report parameters that are not yet modeled, especially explicit uncertainty factors, occlusion radius, UGV camera height, and separate min/max speed bounds.
 2. Add archived numeric MATLAB outputs as fixtures if exact equivalence becomes a requirement.
-3. Implement report uncertainty factors and occlusion radius explicitly before claiming scenario-level quantitative validation.
+3. Once remaining report parameters are implemented, rerun scenario validation before making stronger quantitative claims.
 4. Integrate WLS into UGV cooperative localization and add scenario metrics for localization error.
 5. Replace the first-pass disease model with a documented model before using disease metrics scientifically.
 

@@ -12,10 +12,10 @@ field:
 
 plants:
   leaves_per_tree: [120, 220]
-  height_range: [3.0, 7.0]
+  height_range: [2.0, 3.0]
   canopy_base_frac: [0.60, 0.80]
-  min_canopy_clearance: 2.0
-  crown_radius_xy: [2.5, 5.0]
+  min_canopy_clearance: 1.0
+  crown_radius_xy: [4.5, 5.0]
   shape_power: [1.7, 2.3]
   lobes: [1, 3]
   leaf_jitter: 0.25
@@ -36,7 +36,7 @@ uav:
   initial_estimate_error: [1.5, -1.5, 0.1745329252]
   initial_covariance: [2.5, 2.5, 0.3490658504]
   gps_hz: 1.0
-  v_nom: 3.0
+  v_nom: 4.0
   w_max_deg: 60.0
   kp_ang: 1.6
   kp_dist: 0.6
@@ -50,7 +50,7 @@ uav:
 ugv:
   count: 2
   duration_s: 50.0
-  v_nom: 2.0
+  v_nom: 1.0
   w_max_deg: 60.0
   kp_ang: 1.4
   kp_dist: 0.5
@@ -64,12 +64,12 @@ noise:
   sigma_omega_deg: 9.0
 
 camera:
-  sensor_width_mm: 6.3
-  sensor_height_mm: 4.7
-  focal_mm: 6.5
+  sensor_width_mm: 36.0
+  sensor_height_mm: 24.0
+  focal_mm: 12.0
   fstop_N: 4.0
   coc_mm: 0.03
-  altitude_m: 10.0
+  altitude_m: 7.0
   pitch_deg: 80.0
   roll_deg: 0.0
   range_min_m: 1.0
