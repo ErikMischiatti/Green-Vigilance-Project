@@ -15,28 +15,28 @@ python -m green_vigilance.compare --results results
 
 | Scenario | Observed Leaves | Observed Ratio | UAV RMSE (m) | Total Leaves | Infected Leaves | UGV Targets | Outputs Exist |
 |---|---:|---:|---:|---:|---:|---:|---|
-| baseline | 1734 | 0.131 | 0.435 | 13218 | 6811 | 2 | yes |
-| high_noise | 930 | 0.066 | 1.461 | 14151 | 8876 | 2 | yes |
-| extreme_uncertainty | 0 | 0.000 | 1.658 | 13495 | 8242 | 2 | yes |
+| baseline | 3746 | 0.283 | 0.441 | 13218 | 6670 | 2 | yes |
+| high_noise | 2393 | 0.169 | 1.466 | 14151 | 9055 | 2 | yes |
+| extreme_uncertainty | 2200 | 0.163 | 1.823 | 13495 | 8242 | 2 | yes |
 
 ## Observed Trends
 
-- Observed leaf count decreases from baseline to high-noise and reaches zero in the extreme-uncertainty scenario.
+- Observed leaf count decreases from baseline to high-noise and remains degraded in the extreme-uncertainty scenario.
 - UAV position RMSE increases from baseline to high-noise and increases further in the extreme-uncertainty scenario.
 - All scenarios still produce heatmap, trajectory, 3D scene, and summary outputs.
-- The extreme scenario produces an empty observed heatmap because the configured sensing range/focal setup prevents leaves from entering the camera frustum during the run.
+- After report-aligned camera changes, the extreme scenario no longer produces an empty observed heatmap, but its coverage remains below baseline and its RMSE is the worst of the three scenarios.
 
 ## Comparison with Report Expectations
 
 The report states that increased sensor uncertainty degrades UAV stability, UGV navigation reliability, and disease-detection performance. The current Python implementation reproduces that trend qualitatively:
 
 - Higher uncertainty produces worse UAV RMSE.
-- Higher uncertainty reduces observed plant coverage.
-- Extreme uncertainty can eliminate useful sensing output.
+- Higher uncertainty reduces observed plant coverage relative to baseline.
+- Extreme uncertainty retains some sensing after report-aligned camera changes, but navigation error is highest.
 
 This is qualitative validation only. Exact numerical agreement with MATLAB/report figures is not established because:
 
-- The YAML camera, speed, and tree-height parameters differ from report tables.
+- Some YAML camera, speed, and tree-height parameters are now aligned where the Python model supports them.
 - Explicit report uncertainty factors and occlusion radius are not implemented.
 - No archived MATLAB run outputs are available as numerical fixtures.
 
